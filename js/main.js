@@ -97,7 +97,6 @@ function b2Blue() {
 }
 
 toss.autoplay = true;
-// toss.pause
 
 function p1Toss() {
 
