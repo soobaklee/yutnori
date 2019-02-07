@@ -133,6 +133,7 @@ function p1Toss() {
     setTimeout(function() {
         if (p1Points.reduce(function(acc, a) {return acc + a;}, 0) > 20) {
         document.querySelector('aside h1').innerHTML = 'Player 1 has completed a life!';
+        document.querySelector('aside h1').style.color = 'red';
         
         p1LivesCompl.push(1);
         p1Life.innerHTML = p1LivesCompl.reduce(function(acc, a) {
@@ -203,6 +204,7 @@ function p2Toss() {
         return acc + a;
         }, 0) > 20) {
         document.querySelector('aside h1').innerHTML = 'Player 2 has completed a life!';
+        document.querySelector('aside h1').style.color = 'blue';
         p2LivesCompl.push(1);
         p2Life.innerHTML = (p2LivesCompl.reduce(function(acc, a) {
             return acc + a
