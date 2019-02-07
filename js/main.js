@@ -52,7 +52,7 @@ let p1LivesCompl = [];
 let p2LivesCompl = [];
 let p1GamePosition = [];
 let p2GamePosition = [];
-let vid = document.getElementById('stick-toss');
+let toss = document.getElementById('stick-toss');
 
 
 // /*----- cached element references ----*/ 
@@ -95,31 +95,37 @@ function b2Blue() {
     return;
 }
 
+toss.autoplay = true;
+
 function p1Toss() {
+
+    if (p1Points.reduce(function(acc, a){
+        return acc + a;
+    }, 0) <= 0) { 
+        p1Points = [];
+    }
+
     playerResult = randomToss();   
     console.log(document.querySelector('#stick-toss').src = sticks[playerResult].video);
-    vid.autoplay = true;
-
     p1Points.push(sticks[playerResult].points);
     
     p1GamePosition = (`${gameboard[(p1Points.reduce(function (acc, a) {
         return acc + a;
     }, 0)-1)]}`);
 
-    if (`${p1GamePosition}` === `${p2GamePosition}`) {
+    setTimeout(function() {
+        if (`${p1GamePosition}` === `${p2GamePosition}`) {
         $('.p1Position').removeClass('p1Position');
         $(`#${p1GamePosition}`).addClass('p1Position');
         p2Points = [];
         $('.p2Position').removeClass('p2Position');
-        // $(`#${p1GamePosition}`).addClass('samePosition').addClass('p1Position');
     } else {
         $('.p1Position').removeClass('p1Position');
-        // $('.p2Position').removeClass('samePosition');
         $(`#${p1GamePosition}`).addClass('p1Position');
     }
-
-    if (p1Points.reduce(function(acc, a) {return acc + a;}, 0) > 20) {
-
+    }, 500);
+    setTimeout(function() {
+        if (p1Points.reduce(function(acc, a) {return acc + a;}, 0) > 20) {
         document.querySelector('aside h1').innerHTML = 'Player 1 has completed a life!';
         //use toggle on off for this sentence
         p1LivesCompl.push(1);
@@ -127,22 +133,23 @@ function p1Toss() {
             return acc + a;
         }, 0);
         p1Points = [];
-    }
+        }
     
-    if (p1LivesCompl.reduce(function(acc, a) {
+        if (p1LivesCompl.reduce(function(acc, a) {
         return acc + a
         }, 0) === 2) {
         document.querySelector('header h1').innerHTML = "Player 1 Wins!!";
         document.querySelector('header h1').style.color = 'red';
         document.querySelector('aside h1').innerHTML = "Player 1 Wins!!";
         document.querySelector('aside h1').style.color = 'red';
+        document.querySelector('aside play1').style.color = 'red';
         document.querySelector('#play1').disabled = true;
         document.querySelector('#play2').disabled = true;
-    } else {
+        } else {
         document.querySelector('#play1').disabled = true;
         p1Retoss();
-    }
-
+        }
+    }, 550);
 }
 
 function p1TossEnd() {
@@ -160,27 +167,33 @@ function p1Retoss() {
 }
 
 function p2Toss() {
+    if (p2Points.reduce(function(acc, a){
+        return acc + a;
+    }, 0) <= 0) { 
+        p2Points = [];
+    }
+
     playerResult = randomToss();
     console.log(document.querySelector('#stick-toss').src = sticks[playerResult].video);
-    // playVideo();
     p2Points.push(sticks[playerResult].points);
+
     p2GamePosition = (`${gameboard[(p2Points.reduce(function (acc, a) {
         return acc + a;
     }, 0)-1)]}`);
 
-    if (`${p2GamePosition}` === `${p1GamePosition}`) {
+    setTimeout(function() {
+        if (`${p2GamePosition}` === `${p1GamePosition}`) {
         $('.p2Position').removeClass('p2Position');
         $(`#${p2GamePosition}`).addClass('p2Position');
         p1Points = [];
-        $('.12Position').removeClass('p1Position');
-        // $(`#${p2GamePosition}`).addClass('samePosition').addClass('p2Position');
+        $('.p1Position').removeClass('p1Position');
     } else {
         $('.p2Position').removeClass('p2Position');
-        // $('.p1Position').removeClass('samePosition');
         $(`#${p2GamePosition}`).addClass('p2Position');
-    }
+    }}, 500);
 
-    if (p2Points.reduce(function(acc, a) {
+    setTimeout(function() {
+        if (p2Points.reduce(function(acc, a) {
         return acc + a;
         }, 0) > 20) {
         document.querySelector('aside h1').innerHTML = 'Player 2 has completed a life!';
@@ -190,21 +203,22 @@ function p2Toss() {
             return acc + a
         }, 0));
         p2Points = [];
-    }
-    if (p2LivesCompl.reduce(function(acc, a) {
+        }
+        if (p2LivesCompl.reduce(function(acc, a) {
         return acc + a
         }, 0) === 2) {
         document.querySelector('header h1').innerHTML = 'Player 2 Wins!!';
         document.querySelector('header h1').style.color = 'blue';
         document.querySelector('aside h1').innerHTML = 'Player 2 Wins!!';
         document.querySelector('aside h1').style.color = 'blue';
+        document.querySelector('aside button').style.color = 'blue';
         document.querySelector('#play1').disabled = true;
         document.querySelector('#play2').disabled = true;
-    } else { 
+        } else { 
         document.querySelector('#play2').disabled = true;
         document.querySelector('#play2').style.border = '5px solid blue';
         p2Retoss();
-    }
+    }}, 550);
 }
 
 function p2TossEnd() {
@@ -214,7 +228,6 @@ function p2TossEnd() {
     document.querySelector('#play1').style.border = '5px solid red';
 }
 function p2Retoss() {
-    
     if (playerResult === 'moh' || playerResult === 'yut') {
         (document.querySelector('#play2').disabled = false) &&
         p2Toss();
@@ -223,70 +236,24 @@ function p2Retoss() {
     }
 }
 
-function playVideo() {
-        sticks[playerResult].video.play();
-    //     else sticks.PlayerResults.video.pause();
-    }
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Move player's piece "x" number of spaces
-// Log lives completed for each player
-
-
-// Pseudocode
-
-// P1 tosses 4 sticks (button to toss)
-// Sticks fall in random order
-// P1 earns points from the toss
-// One of P1's lives moves "x" number of spaces
-// P2 tosses sticks
-// Sticks fall in random order
-// P2 earns points
-// One of P2's lives moves "x" number of spaces
-// If one of the player's lives moves past the other player's life, 
-// the other player's life returns t     1. Face (rounded edge)
-// o beginning position
-// P1 and P2 continue to take turns tossing sticks
-// Once a life returns to starting position, that life becomes a "point"
 
 // Play & Point System:
 // Sticks have 3 sides:
 //     1. Face (flat edge)
 //     2. Back (rounded edge)
 //     3. Side (will require re-toss)
-// DO - If sticks land 3 back-side up & 1 face-side up, token moves 1 position
-// GAE - If sticks land 2 back-side and 2 face up, token moves 2 places
+// DOH - If sticks land 3 back-side up & 1 face-side up, token moves 1 position
+// GEH - If sticks land 2 back-side and 2 face up, token moves 2 places
 // GUHL - If sticks land 1 back-side and 3 face up, token moves 3 places
-// YUUT - If sticks land 4 face up, token moves 4 positions && bonus throw triggers
+// YUT - If sticks land 4 face up, token moves 4 positions && bonus throw triggers
 // MOH - If sticks land 4 backside up, token can move 5 places && bonus throw triggers
-// RE-TOSS - If one or more sticks land on side
+// BACK DOH - If sticks land with 3 back-side up & 1 face-side up stick with 'X' marked in the face
+// RE-TOSS - If one or more sticks land on yut or moh
 
 
 // Dependent on Time:
