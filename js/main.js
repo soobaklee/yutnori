@@ -2,7 +2,7 @@
 
 const sticks = {
     back: {
-        video: 'video/back.m4v',
+        video: "video/back.m4v",
         points: -1,
         retoss: false
     },
@@ -44,8 +44,6 @@ const p2Life = document.querySelector('#p2 h1');
 
 // /*----- app's state (variables) -----*/ 
 let tossResults, points, livesCompleted, playerResult;
-
-//in lieu of p1&p2
 var p1, p2;
 let playerTurn = p1;
 let p1Points = [];
@@ -54,25 +52,21 @@ let p1LivesCompl = [];
 let p2LivesCompl = [];
 let p1GamePosition = [];
 let p2GamePosition = [];
+let vid = document.getElementById('stick-toss');
 
 
 // /*----- cached element references ----*/ 
 //Stick play for each player
 let p1TossResult = document.querySelector('#stick-toss');
 let p2TossResult = document.querySelector('#stick-toss');
-// const p2TossResult = document.querySelector('#stick-toss');
-// Points for each player
-//How many rounds each player has completed => 4 completions equals winner!
 
 
 // /*----- event listeners -----*/ 
-// Button to "toss/spin" the sticks
+//Tossing the sticks
 document.querySelector('#play1').addEventListener('click', p1Toss, p1Retoss);
 document.querySelector('#play1').removeEventListener('click', p1TossEnd);
-document.querySelector('#play2').addEventListener('click', p2Toss);
+document.querySelector('#play2').addEventListener('click', p2Toss, p2Retoss);
 document.querySelector('#play2').removeEventListener('click', p2TossEnd);
-// Moving the lives around board
-
 
 
 // /*----- functions -----*/
@@ -91,10 +85,20 @@ function randomToss() {
     return playLookup[Math.floor(Math.random() * 6)];
 }
 
-function p1Toss() {
-    playerResult = randomToss();
+function b1Red() {
+    document.getElementById('play1').style.border = '5px solid red';
+    return;
+}
 
-    console.log(document.querySelector('#stick-toss source').src = sticks[playerResult].video);
+function b2Blue() {
+    document.getElementById('play2').style.border = '5px solid blue';
+    return;
+}
+
+function p1Toss() {
+    playerResult = randomToss();   
+    console.log(document.querySelector('#stick-toss').src = sticks[playerResult].video);
+    vid.autoplay = true;
 
     p1Points.push(sticks[playerResult].points);
     
@@ -104,16 +108,20 @@ function p1Toss() {
 
     if (`${p1GamePosition}` === `${p2GamePosition}`) {
         $('.p1Position').removeClass('p1Position');
-        $(`#${p1GamePosition}`).addClass('samePosition').addClass('p1Position');
+        $(`#${p1GamePosition}`).addClass('p1Position');
+        p2Points = [];
+        $('.p2Position').removeClass('p2Position');
+        // $(`#${p1GamePosition}`).addClass('samePosition').addClass('p1Position');
     } else {
         $('.p1Position').removeClass('p1Position');
-        $('.p2Position').removeClass('samePosition');
+        // $('.p2Position').removeClass('samePosition');
         $(`#${p1GamePosition}`).addClass('p1Position');
     }
 
     if (p1Points.reduce(function(acc, a) {return acc + a;}, 0) > 20) {
-        alert('Player 1 has completed a life!');
-        console.log(p1LivesCompl);
+
+        document.querySelector('aside h1').innerHTML = 'Player 1 has completed a life!';
+        //use toggle on off for this sentence
         p1LivesCompl.push(1);
         document.querySelector('#play1 span').innerHTML = p1LivesCompl.reduce(function(acc, a) {
             return acc + a;
@@ -123,11 +131,15 @@ function p1Toss() {
     
     if (p1LivesCompl.reduce(function(acc, a) {
         return acc + a
-        }, 0) === 3) {
-        alert('Player 1 wins!');
+        }, 0) === 2) {
+        document.querySelector('header h1').innerHTML = "Player 1 Wins!!";
+        document.querySelector('header h1').style.color = 'red';
+        document.querySelector('aside h1').innerHTML = "Player 1 Wins!!";
+        document.querySelector('aside h1').style.color = 'red';
         document.querySelector('#play1').disabled = true;
         document.querySelector('#play2').disabled = true;
     } else {
+        document.querySelector('#play1').disabled = true;
         p1Retoss();
     }
 
@@ -135,17 +147,22 @@ function p1Toss() {
 
 function p1TossEnd() {
     document.querySelector('#play1').disabled = true;
+    document.querySelector('#play1').style.border = '2px solid white';
     document.querySelector('#play2').disabled = false;
+    document.querySelector('#play2').style.border = '5px solid blue';
 }
 
 function p1Retoss() {
-    (playerResult === 'moh' || playerResult === 'yut') ? p1Toss() :
+    (playerResult === 'moh' || playerResult === 'yut') ? (
+    (document.querySelector('#play1').disabled = false) && 
+    p1Toss()) :
         p1TossEnd();
 }
 
 function p2Toss() {
     playerResult = randomToss();
-    console.log(document.querySelector('#stick-toss source').src = sticks[playerResult].video);
+    console.log(document.querySelector('#stick-toss').src = sticks[playerResult].video);
+    // playVideo();
     p2Points.push(sticks[playerResult].points);
     p2GamePosition = (`${gameboard[(p2Points.reduce(function (acc, a) {
         return acc + a;
@@ -153,17 +170,21 @@ function p2Toss() {
 
     if (`${p2GamePosition}` === `${p1GamePosition}`) {
         $('.p2Position').removeClass('p2Position');
-        $(`#${p2GamePosition}`).addClass('samePosition').addClass('p2Position');
+        $(`#${p2GamePosition}`).addClass('p2Position');
+        p1Points = [];
+        $('.12Position').removeClass('p1Position');
+        // $(`#${p2GamePosition}`).addClass('samePosition').addClass('p2Position');
     } else {
         $('.p2Position').removeClass('p2Position');
-        $('.p1Position').removeClass('samePosition');
+        // $('.p1Position').removeClass('samePosition');
         $(`#${p2GamePosition}`).addClass('p2Position');
     }
 
     if (p2Points.reduce(function(acc, a) {
         return acc + a;
         }, 0) > 20) {
-        alert('Player 2 has completed a life!');
+        document.querySelector('aside h1').innerHTML = 'Player 2 has completed a life!';
+        //use toggle on off for this sentence
         p2LivesCompl.push(1);
         document.querySelector('#play2 span').innerHTML = (p2LivesCompl.reduce(function(acc, a) {
             return acc + a
@@ -172,30 +193,40 @@ function p2Toss() {
     }
     if (p2LivesCompl.reduce(function(acc, a) {
         return acc + a
-        }, 0) === 3) {
-        alert('Player 2 wins!');
+        }, 0) === 2) {
+        document.querySelector('header h1').innerHTML = 'Player 2 Wins!!';
+        document.querySelector('header h1').style.color = 'blue';
+        document.querySelector('aside h1').innerHTML = 'Player 2 Wins!!';
+        document.querySelector('aside h1').style.color = 'blue';
         document.querySelector('#play1').disabled = true;
         document.querySelector('#play2').disabled = true;
     } else { 
+        document.querySelector('#play2').disabled = true;
+        document.querySelector('#play2').style.border = '5px solid blue';
         p2Retoss();
     }
 }
 
 function p2TossEnd() {
     document.querySelector('#play2').disabled = true;
+    document.querySelector('#play2').style.border = '2px solid white';
     document.querySelector('#play1').disabled = false;
+    document.querySelector('#play1').style.border = '5px solid red';
 }
 function p2Retoss() {
-
-    (playerResult === 'moh' || playerResult === 'yut') ? p2Toss() :
+    
+    if (playerResult === 'moh' || playerResult === 'yut') {
+        (document.querySelector('#play2').disabled = false) &&
+        p2Toss();
+    } else {
         p2TossEnd();
+    }
 }
 
-// function playPause() {
-//     if (sticks.playerResults.video.paused) 
-//         sticks.PlayerResults.video.play();
-//         else sticks.PlayerResults.video.pause();
-//     }
+function playVideo() {
+        sticks[playerResult].video.play();
+    //     else sticks.PlayerResults.video.pause();
+    }
 
 
 
