@@ -39,8 +39,8 @@ const gameboard = ['item01', 'item02', 'item03', 'item04', 'item05', 'item06', '
 const p1Disabled = document.querySelector('#play1').disabled;
 const p2Disabled = document.querySelector('#play2').disabled;
 
-const p1Life = document.querySelector('#p1 h1');
-const p2Life = document.querySelector('#p2 h1');
+const p1Life = document.querySelector('#play1 span');
+const p2Life = document.querySelector('#play2 span');
 
 // /*----- app's state (variables) -----*/ 
 let tossResults, points, livesCompleted, playerResult;
@@ -67,6 +67,7 @@ document.querySelector('#play1').addEventListener('click', p1Toss, p1Retoss);
 document.querySelector('#play1').removeEventListener('click', p1TossEnd);
 document.querySelector('#play2').addEventListener('click', p2Toss, p2Retoss);
 document.querySelector('#play2').removeEventListener('click', p2TossEnd);
+document.querySelector('#replay').addEventListener('click', replay);
 
 
 // /*----- functions -----*/
@@ -96,6 +97,7 @@ function b2Blue() {
 }
 
 toss.autoplay = true;
+// toss.pause
 
 function p1Toss() {
 
@@ -105,9 +107,14 @@ function p1Toss() {
         p1Points = [];
     }
 
-    playerResult = randomToss();   
+    playerResult = randomToss();
+    // document.querySelector('#play2').style.border = '2px solid white';   
     console.log(document.querySelector('#stick-toss').src = sticks[playerResult].video);
+    toss.autoplay = true;
     p1Points.push(sticks[playerResult].points);
+    setTimeout(function() {
+        toss.pause;
+    })
     
     p1GamePosition = (`${gameboard[(p1Points.reduce(function (acc, a) {
         return acc + a;
@@ -127,9 +134,9 @@ function p1Toss() {
     setTimeout(function() {
         if (p1Points.reduce(function(acc, a) {return acc + a;}, 0) > 20) {
         document.querySelector('aside h1').innerHTML = 'Player 1 has completed a life!';
-        //use toggle on off for this sentence
+        
         p1LivesCompl.push(1);
-        document.querySelector('#play1 span').innerHTML = p1LivesCompl.reduce(function(acc, a) {
+        p1Life.innerHTML = p1LivesCompl.reduce(function(acc, a) {
             return acc + a;
         }, 0);
         p1Points = [];
@@ -138,13 +145,13 @@ function p1Toss() {
         if (p1LivesCompl.reduce(function(acc, a) {
         return acc + a
         }, 0) === 2) {
-        document.querySelector('header h1').innerHTML = "Player 1 Wins!!";
         document.querySelector('header h1').style.color = 'red';
-        document.querySelector('aside h1').innerHTML = "Player 1 Wins!!";
+        document.querySelector('header h1').innerHTML = "Player 1 Wins!!";
         document.querySelector('aside h1').style.color = 'red';
-        document.querySelector('aside play1').style.color = 'red';
+        document.querySelector('aside h1').innerHTML = "Player 1 Wins!!";
         document.querySelector('#play1').disabled = true;
         document.querySelector('#play2').disabled = true;
+        document.getElementById('replay').style.visibility = 'visible';
         } else {
         document.querySelector('#play1').disabled = true;
         p1Retoss();
@@ -154,7 +161,7 @@ function p1Toss() {
 
 function p1TossEnd() {
     document.querySelector('#play1').disabled = true;
-    document.querySelector('#play1').style.border = '2px solid white';
+    document.querySelector('#play1').style.border = '2px solid black';
     document.querySelector('#play2').disabled = false;
     document.querySelector('#play2').style.border = '5px solid blue';
 }
@@ -197,9 +204,8 @@ function p2Toss() {
         return acc + a;
         }, 0) > 20) {
         document.querySelector('aside h1').innerHTML = 'Player 2 has completed a life!';
-        //use toggle on off for this sentence
         p2LivesCompl.push(1);
-        document.querySelector('#play2 span').innerHTML = (p2LivesCompl.reduce(function(acc, a) {
+        p2Life.innerHTML = (p2LivesCompl.reduce(function(acc, a) {
             return acc + a
         }, 0));
         p2Points = [];
@@ -207,13 +213,14 @@ function p2Toss() {
         if (p2LivesCompl.reduce(function(acc, a) {
         return acc + a
         }, 0) === 2) {
-        document.querySelector('header h1').innerHTML = 'Player 2 Wins!!';
         document.querySelector('header h1').style.color = 'blue';
-        document.querySelector('aside h1').innerHTML = 'Player 2 Wins!!';
+        document.querySelector('header h1').innerHTML = 'Player 2 Wins!!';
         document.querySelector('aside h1').style.color = 'blue';
-        document.querySelector('aside button').style.color = 'blue';
+        document.querySelector('aside h1').innerHTML = 'Player 2 Wins!!';
         document.querySelector('#play1').disabled = true;
         document.querySelector('#play2').disabled = true;
+        document.querySelector('#replay').disabled = false;
+        document.getElementById('replay').style.visibility = 'visible';
         } else { 
         document.querySelector('#play2').disabled = true;
         document.querySelector('#play2').style.border = '5px solid blue';
@@ -223,7 +230,7 @@ function p2Toss() {
 
 function p2TossEnd() {
     document.querySelector('#play2').disabled = true;
-    document.querySelector('#play2').style.border = '2px solid white';
+    document.querySelector('#play2').style.border = '2px solid black';
     document.querySelector('#play1').disabled = false;
     document.querySelector('#play1').style.border = '5px solid red';
 }
@@ -236,7 +243,22 @@ function p2Retoss() {
     }
 }
 
-
+function replay() {
+    p2TossEnd();
+    p1Life.innerHTML = '0';
+    p2Life.innerHTML = '0';
+    p1LivesCompl = [];
+    p2LivesCompl = [];
+    p1Points = [];
+    p2Points = [];
+    document.querySelector('aside h1').innerHTML = '';
+    document.querySelector('header h1').style.color = 'white';
+    document.querySelector('header h1').innerHTML = 'YUTNORI';
+    $('.p2Position').removeClass('p2Position');
+    $('.p1Position').removeClass('p1Position');
+    document.querySelector('#play2').style.borderColor = "black";
+    document.getElementById('replay').style.visibility = "hidden";
+}
 
 
 
