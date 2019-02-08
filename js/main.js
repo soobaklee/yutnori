@@ -36,8 +36,8 @@ const playLookup = ['back', 'doh', 'geh', 'guhl', 'yut', 'moh'];
 
 const gameboard = ['item01', 'item02', 'item03', 'item04', 'item05', 'item06', 'item07', 'item08', 'item09', 'item10', 'item11', 'item12', 'item13', 'item14', 'item15', 'item16', 'item17', 'item18', 'item19', 'item20'];
 
-const p1Disabled = document.querySelector('#play1').disabled;
-const p2Disabled = document.querySelector('#play2').disabled;
+const p1Btn = document.querySelector('#play1');
+const p2Btn = document.querySelector('#play2');
 
 const p1Life = document.querySelector('#play1 span');
 const p2Life = document.querySelector('#play2 span');
@@ -57,8 +57,7 @@ let toss = document.getElementById('stick-toss');
 
 // /*----- cached element references ----*/ 
 //Stick play for each player
-let p1TossResult = document.querySelector('#stick-toss');
-let p2TossResult = document.querySelector('#stick-toss');
+let tossResult = document.querySelector('#stick-toss');
 
 
 // /*----- event listeners -----*/ 
@@ -97,6 +96,7 @@ function b2Blue() {
 }
 
 toss.autoplay = true;
+p2Btn.disabled = true;
 
 function p1Toss() {
 
@@ -107,8 +107,7 @@ function p1Toss() {
     }
 
     playerResult = randomToss();
-    // document.querySelector('#play2').style.border = '2px solid white';   
-    console.log(document.querySelector('#stick-toss').src = sticks[playerResult].video);
+    tossResult.src = sticks[playerResult].video;
     toss.autoplay = true;
     p1Points.push(sticks[playerResult].points);
     setTimeout(function() {
@@ -149,21 +148,21 @@ function p1Toss() {
         document.querySelector('header h1').innerHTML = "Player 1 Wins!!";
         document.querySelector('aside h1').style.color = 'red';
         document.querySelector('aside h1').innerHTML = "Player 1 Wins!!";
-        document.querySelector('#play1').disabled = true;
-        document.querySelector('#play2').disabled = true;
+        p1Btn.disabled = true;
+        p2Btn.disabled = true;
         document.getElementById('replay').style.visibility = 'visible';
         } else {
-        document.querySelector('#play1').disabled = true;
+        p1Btn.disabled = true;
         p1Retoss();
         }
     }, 550);
 }
 
 function p1TossEnd() {
-    document.querySelector('#play1').disabled = true;
-    document.querySelector('#play1').style.border = '2px solid black';
-    document.querySelector('#play2').disabled = false;
-    document.querySelector('#play2').style.border = '5px solid blue';
+    p1Btn.disabled = true;
+    p1Btn.style.border = '2px solid black';
+    p2Btn.disabled = false;
+    p2Btn.style.border = '5px solid blue';
 }
 
 function p1Retoss() {
@@ -181,7 +180,7 @@ function p2Toss() {
     }
 
     playerResult = randomToss();
-    console.log(document.querySelector('#stick-toss').src = sticks[playerResult].video);
+    tossResult.src = sticks[playerResult].video;
     p2Points.push(sticks[playerResult].points);
 
     p2GamePosition = (`${gameboard[(p2Points.reduce(function (acc, a) {
@@ -218,22 +217,22 @@ function p2Toss() {
         document.querySelector('header h1').innerHTML = 'Player 2 Wins!!';
         document.querySelector('aside h1').style.color = 'blue';
         document.querySelector('aside h1').innerHTML = 'Player 2 Wins!!';
-        document.querySelector('#play1').disabled = true;
-        document.querySelector('#play2').disabled = true;
+        p1Btn.disabled = true;
+        p2Btn.disabled = true;
         document.querySelector('#replay').disabled = false;
         document.getElementById('replay').style.visibility = 'visible';
         } else { 
-        document.querySelector('#play2').disabled = true;
+        p2Btn.disabled = true;
         document.querySelector('#play2').style.border = '5px solid blue';
         p2Retoss();
     }}, 550);
 }
 
 function p2TossEnd() {
-    document.querySelector('#play2').disabled = true;
-    document.querySelector('#play2').style.border = '2px solid black';
-    document.querySelector('#play1').disabled = false;
-    document.querySelector('#play1').style.border = '5px solid red';
+    p2Btn.disabled = true;
+    p2Btn.style.border = '2px solid black';
+    p1Btn.disabled = false;
+    p1Btn.style.border = '5px solid red';
 }
 function p2Retoss() {
     if (playerResult === 'moh' || playerResult === 'yut') {
@@ -257,7 +256,7 @@ function replay() {
     document.querySelector('header h1').innerHTML = 'YUTNORI';
     $('.p2Position').removeClass('p2Position');
     $('.p1Position').removeClass('p1Position');
-    document.querySelector('#play2').style.borderColor = "black";
+    p2Btn.style.borderColor = "black";
     document.getElementById('replay').style.visibility = "hidden";
 }
 

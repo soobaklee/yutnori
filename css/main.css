@@ -6,7 +6,7 @@
     padding: 0;
     background: black;
     color: white;
-    max-width: 1100px;
+    max-width: 1050px;
     justify-items: center;
     align-items: center;
     margin: 0 auto;
@@ -21,7 +21,7 @@ header {
     margin: 5px 0 0 0;
     border: 0px;
     color: black;
-    max-width: 1100px;
+    max-width: 1050px;
 }
 
 h1 {
@@ -265,3 +265,32 @@ h4 {
     background-image: url('/images/Flag_of_South_Korea.png');
 }
 
+*::-webkit-media-controls-panel {
+
+    display: none!important;
+  
+    -webkit-appearance: none;
+  
+}
+  
+   
+  
+*::--webkit-media-controls-play-button {
+  
+    display: none!important;
+  
+    -webkit-appearance: none;
+  
+}
+  
+   
+  
+*::-webkit-media-controls-start-playback-button {
+  
+    display: none!important;
+  
+    -webkit-appearance: none;
+  
+}
+  
+  
