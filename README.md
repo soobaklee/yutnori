@@ -30,17 +30,17 @@ This rendition of the gameboard differs from the original and much loved gameboa
 
 
 #### MOH: 5 POINTS, PLAYER TOSSES AGAIN
-4 sticks land flat side up
+4 sticks land rounded side up
 ![YUT](https://i.imgur.com/MKuYsIT.jpg)
 
 
 #### BACK DOH: -1 POINT
 1 stick marked with an 'X' lands flat side up
-If you do not have a life on the board yet, rolling a back doh does not have any effect
+If you do not have a life on the board yet, rolling a back doh has no effect
 ![BACK DOH](https://i.imgur.com/QIljIRF.jpg)
 
 
-
+### Directions to Play
 Player 1 begins this rendered game version by 'tossing' sticks by using the red button bottom of the screen. Once the sticks are tossed and landed, the player can move their life piece 'x' number of spaces. If the player tosses a back doh on the first toss, this has no affect on the player. If the player tosses a yut or moh, the player then rolls a second or third or fourth, etc time.
 ![home screen](https://i.imgur.com/rGjO1cx.png)
 
