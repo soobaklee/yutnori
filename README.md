@@ -1,5 +1,5 @@
-#YUTNORI 
-#####https://soobaklee.github.io/yutnori/
+# YUTNORI 
+##### https://soobaklee.github.io/yutnori/
 
 ![YUTNORI](URL)
 
@@ -7,34 +7,34 @@ YUTNORI broken down refers to play (nori) of the yut sticks. It is a game played
 
 This rendition of the gameboard differs from the original and much loved gameboard. Normally, the gameboard is now shaped like a rectangle with an 'X' that crosses through the middle extending from the four corners. In the original game, the players are also able to decide on the route they wish to take their pieces. The different routes help players avoid being run into by their opponents
 
-##How to Play Yutnori
+## How to Play Yutnori
 
-###Point System
-####DOH: 1 POINT
+### Point System
+#### DOH: 1 POINT
 1 stick lands flat side up
 ![DOH](https://i.imgur.com/aEhovzu.jpg)
 
 
-####GEH: 2 POINTS
+#### GEH: 2 POINTS
 2 sticks land flat side up
 ![GEH](https://i.imgur.com/J8lg3q3.jpg)
 
-####GUHL: 3 POINTS
+#### GUHL: 3 POINTS
 3 sticks land flat side up
 ![GUHL](https://i.imgur.com/u9Mht0w.jpg)
 
 
-####YUT: 4 POINTS, PLAYER TOSSES AGAIN
+#### YUT: 4 POINTS, PLAYER TOSSES AGAIN
 4 sticks land flat side up
 ![YUT](https://i.imgur.com/NoPMKfG.jpg)
 
 
-####MOH: 5 POINTS, PLAYER TOSSES AGAIN
+#### MOH: 5 POINTS, PLAYER TOSSES AGAIN
 4 sticks land flat side up
 ![YUT](https://i.imgur.com/MKuYsIT.jpg)
 
 
-####BACK DOH: -1 POINT
+#### BACK DOH: -1 POINT
 1 stick marked with an 'X' lands flat side up
 If you do not have a life on the board yet, rolling a back doh does not have any effect
 ![BACK DOH](https://i.imgur.com/QIljIRF.jpg)
