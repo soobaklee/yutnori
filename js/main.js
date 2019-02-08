@@ -45,7 +45,6 @@ const p2Life = document.querySelector('#play2 span');
 // /*----- app's state (variables) -----*/ 
 let tossResults, points, livesCompleted, playerResult;
 var p1, p2;
-let playerTurn = p1;
 let p1Points = [];
 let p2Points = [];
 let p1LivesCompl = [];
@@ -56,12 +55,10 @@ let toss = document.getElementById('stick-toss');
 
 
 // /*----- cached element references ----*/ 
-//Stick play for each player
 let tossResult = document.querySelector('#stick-toss');
 
 
 // /*----- event listeners -----*/ 
-//Tossing the sticks
 document.querySelector('#play1').addEventListener('click', p1Toss, p1Retoss);
 document.querySelector('#play1').removeEventListener('click', p1TossEnd);
 document.querySelector('#play2').addEventListener('click', p2Toss, p2Retoss);
@@ -74,7 +71,6 @@ document.querySelector('#replay').addEventListener('click', replay);
 
 
 function render() {
-    // playPause();
     // p1Toss();
     // p1Retoss();
     // p2Toss();
